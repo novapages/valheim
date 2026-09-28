@@ -10,23 +10,60 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent !important;
+      -webkit-touch-callout: none;
+      touch-action: manipulation;
+    }
+
+    html {
+      background-color: #1e293b;
     }
 
     body {
-      background: #1e293b; /* Fond gris-bleu foncé plus clair */
+      background-color: #1e293b;
       color: #f8fafc;
       min-height: 100vh;
       min-height: 100dvh;
-      padding: 12px;
+      padding: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
+    body.theme-default {
+      background: #1e293b;
+    }
+    body.theme-prairie {
+      background: radial-gradient(circle at center, #1e3a29 0%, #0f172a 100%);
+    }
+    body.theme-foret {
+      background: radial-gradient(circle at center, #064e3b 0%, #0b1329 100%);
+    }
+    body.theme-marais {
+      background: radial-gradient(circle at center, #3f6212 0%, #0f172a 100%);
+    }
+    body.theme-montagne {
+      background: radial-gradient(circle at center, #0c4a6e 0%, #0f172a 100%);
+    }
+    body.theme-plaines {
+      background: radial-gradient(circle at center, #713f12 0%, #0f172a 100%);
+    }
+    body.theme-brume {
+      background: radial-gradient(circle at center, #581c87 0%, #0f172a 100%);
+    }
+    body.theme-cendre {
+      background: radial-gradient(circle at center, #7f1d1d 0%, #0f172a 100%);
+    }
+    body.theme-nord {
+      background: radial-gradient(circle at center, #312e81 0%, #0f172a 100%);
+    }
+    body.theme-ocean {
+      background: radial-gradient(circle at center, #1e3a8a 0%, #0f172a 100%);
+    }
+
     .app-container {
       width: 100%;
       max-width: 800px;
-      margin: auto 0;
     }
 
     .glass {
@@ -38,6 +75,7 @@
     }
 
     .search-container {
+      width: 100%;
       margin-bottom: 16px;
     }
 
@@ -50,19 +88,12 @@
       color: #fff;
       font-size: 1rem;
       outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .search-input:focus {
-      border-color: #fbbf24;
-      box-shadow: 0 0 12px rgba(251, 191, 36, 0.3);
     }
 
     .search-input::placeholder {
       color: #cbd5e1;
     }
 
-    /* Bouton retour */
     .back-btn {
       display: none;
       align-items: center;
@@ -75,18 +106,16 @@
       font-weight: 600;
       margin-bottom: 16px;
       cursor: pointer;
-      transition: background 0.2s;
+      outline: none;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
-    .back-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    /* Biome Grid : 2 colonnes */
     .biome-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
+      width: 100%;
     }
 
     .biome-card {
@@ -94,147 +123,116 @@
       padding: 12px;
       text-align: center;
       cursor: pointer;
-      transition: transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 8px;
       border-radius: 16px;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
-    .biome-card:hover {
-      transform: translateY(-2px);
-    }
-
-    .biome-card:active {
-      transform: scale(0.97);
-    }
-
-    /* Couleurs vivantes & contrastées par Biome */
     .biome-prairie {
       background: linear-gradient(135deg, rgba(34, 197, 94, 0.35) 0%, rgba(22, 101, 52, 0.45) 100%);
       border: 1px solid #4ade80;
-    }
-    .biome-prairie:hover {
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.5) 0%, rgba(22, 101, 52, 0.6) 100%);
-      box-shadow: 0 4px 20px rgba(74, 222, 128, 0.25);
     }
 
     .biome-foret {
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(6, 78, 59, 0.45) 100%);
       border: 1px solid #34d399;
     }
-    .biome-foret:hover {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.5) 0%, rgba(6, 78, 59, 0.6) 100%);
-      box-shadow: 0 4px 20px rgba(52, 211, 153, 0.25);
-    }
 
     .biome-marais {
       background: linear-gradient(135deg, rgba(163, 230, 53, 0.35) 0%, rgba(63, 98, 18, 0.45) 100%);
       border: 1px solid #a3e635;
-    }
-    .biome-marais:hover {
-      background: linear-gradient(135deg, rgba(163, 230, 53, 0.5) 0%, rgba(63, 98, 18, 0.6) 100%);
-      box-shadow: 0 4px 20px rgba(163, 230, 53, 0.25);
     }
 
     .biome-montagne {
       background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(12, 74, 110, 0.45) 100%);
       border: 1px solid #38bdf8;
     }
-    .biome-montagne:hover {
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.5) 0%, rgba(12, 74, 110, 0.6) 100%);
-      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
-    }
 
     .biome-plaines {
       background: linear-gradient(135deg, rgba(250, 204, 21, 0.35) 0%, rgba(113, 63, 18, 0.45) 100%);
       border: 1px solid #facc15;
-    }
-    .biome-plaines:hover {
-      background: linear-gradient(135deg, rgba(250, 204, 21, 0.5) 0%, rgba(113, 63, 18, 0.6) 100%);
-      box-shadow: 0 4px 20px rgba(250, 204, 21, 0.25);
     }
 
     .biome-brume {
       background: linear-gradient(135deg, rgba(192, 132, 252, 0.35) 0%, rgba(88, 28, 135, 0.45) 100%);
       border: 1px solid #c084fc;
     }
-    .biome-brume:hover {
-      background: linear-gradient(135deg, rgba(192, 132, 252, 0.5) 0%, rgba(88, 28, 135, 0.6) 100%);
-      box-shadow: 0 4px 20px rgba(192, 132, 252, 0.25);
-    }
 
     .biome-cendre {
       background: linear-gradient(135deg, rgba(248, 113, 113, 0.35) 0%, rgba(153, 27, 27, 0.45) 100%);
       border: 1px solid #f87171;
-    }
-    .biome-cendre:hover {
-      background: linear-gradient(135deg, rgba(248, 113, 113, 0.5) 0%, rgba(153, 27, 27, 0.6) 100%);
-      box-shadow: 0 4px 20px rgba(248, 113, 113, 0.25);
     }
 
     .biome-nord {
       background: linear-gradient(135deg, rgba(129, 140, 248, 0.35) 0%, rgba(49, 46, 129, 0.45) 100%);
       border: 1px solid #818cf8;
     }
-    .biome-nord:hover {
-      background: linear-gradient(135deg, rgba(129, 140, 248, 0.5) 0%, rgba(49, 46, 129, 0.6) 100%);
-      box-shadow: 0 4px 20px rgba(129, 140, 248, 0.25);
-    }
 
     .biome-ocean {
       background: linear-gradient(135deg, rgba(96, 165, 250, 0.35) 0%, rgba(30, 58, 138, 0.45) 100%);
       border: 1px solid #60a5fa;
     }
-    .biome-ocean:hover {
-      background: linear-gradient(135deg, rgba(96, 165, 250, 0.5) 0%, rgba(30, 58, 138, 0.6) 100%);
-      box-shadow: 0 4px 20px rgba(96, 165, 250, 0.25);
-    }
 
     .biome-icon {
       font-size: 2.2rem;
+      line-height: 1;
     }
 
     .biome-title {
       font-weight: 800;
-      font-size: 1.5rem;
-      letter-spacing: 0.8px;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
       text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
 
-    /* Creatures View */
     .creatures-view {
       display: none;
     }
 
     .biome-header-title {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 800;
       margin-bottom: 12px;
       color: #f8fafc;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
 
     .creature-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .creature-card {
-      padding: 10px 14px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
     }
 
+    .theme-prairie .creature-card { border-color: rgba(74, 222, 128, 0.3); background: rgba(34, 197, 94, 0.12); }
+    .theme-foret .creature-card   { border-color: rgba(52, 211, 153, 0.3); background: rgba(16, 185, 129, 0.12); }
+    .theme-marais .creature-card  { border-color: rgba(163, 230, 53, 0.3); background: rgba(163, 230, 53, 0.12); }
+    .theme-montagne .creature-card{ border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.12); }
+    .theme-plaines .creature-card { border-color: rgba(250, 204, 21, 0.3); background: rgba(250, 204, 21, 0.12); }
+    .theme-brume .creature-card   { border-color: rgba(192, 132, 252, 0.3); background: rgba(192, 132, 252, 0.12); }
+    .theme-cendre .creature-card  { border-color: rgba(248, 113, 113, 0.3); background: rgba(248, 113, 113, 0.12); }
+    .theme-nord .creature-card    { border-color: rgba(129, 140, 248, 0.3); background: rgba(129, 140, 248, 0.12); }
+    .theme-ocean .creature-card   { border-color: rgba(96, 165, 250, 0.3); background: rgba(96, 165, 250, 0.12); }
+
     .creature-card.boss {
-      border: 1px solid rgba(251, 191, 36, 0.7);
-      background: rgba(251, 191, 36, 0.15);
-      box-shadow: 0 0 12px rgba(251, 191, 36, 0.2);
+      border: 1px solid rgba(251, 191, 36, 0.8) !important;
+      background: rgba(251, 191, 36, 0.18) !important;
+      box-shadow: 0 0 14px rgba(251, 191, 36, 0.25);
     }
 
     .creature-name {
@@ -242,14 +240,14 @@
       font-size: 0.95rem;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .boss-tag {
       font-size: 0.7rem;
       background: #fbbf24;
       color: #000;
-      padding: 1px 5px;
+      padding: 1px 6px;
       border-radius: 4px;
       font-weight: 800;
     }
@@ -257,7 +255,7 @@
     .badges-container {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       flex-wrap: wrap;
       justify-content: flex-end;
     }
@@ -295,12 +293,43 @@
       padding: 24px;
       color: #cbd5e1;
     }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+        align-items: flex-start;
+      }
+
+      .biome-grid {
+        gap: 8px;
+      }
+
+      .biome-card {
+        aspect-ratio: 2.3 / 1;
+        padding: 6px;
+        gap: 4px;
+        border-radius: 12px;
+      }
+
+      .biome-icon {
+        font-size: 1.5rem;
+      }
+
+      .biome-title {
+        font-size: 0.72rem;
+        letter-spacing: 0;
+      }
+
+      .search-input {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
-<body>
+<body class="theme-default">
 
   <div class="app-container">
-    <!-- Barre de recherche -->
     <div class="search-container">
       <input type="text" id="search-input" class="search-input" placeholder="Rechercher un monstre ou un biome..." oninput="handleSearch()">
     </div>
@@ -309,7 +338,6 @@
       ← Biomes
     </button>
 
-    <!-- Biomes Grid -->
     <main id="biomes-view" class="biome-grid">
       <div class="biome-card biome-prairie" onclick="openBiome('prairie')">
         <span class="biome-icon">🌱</span>
@@ -333,11 +361,11 @@
       </div>
       <div class="biome-card biome-brume" onclick="openBiome('brume')">
         <span class="biome-icon">😶‍🌫️</span>
-        <span class="biome-title">TERRES DE BRUME</span>
+        <span class="biome-title">TERRES BRUMEUSES</span>
       </div>
       <div class="biome-card biome-cendre" onclick="openBiome('cendre')">
         <span class="biome-icon">🥵</span>
-        <span class="biome-title">TERRES DE CENDRE</span>
+        <span class="biome-title">TERRES DE CENDRES</span>
       </div>
       <div class="biome-card biome-nord" onclick="openBiome('nord')">
         <span class="biome-icon">🥶</span>
@@ -518,7 +546,7 @@
 
     function renderCreatureCard(c) {
       return `
-        <div class="creature-card glass ${c.boss ? 'boss' : ''}">
+        <div class="creature-card ${c.boss ? 'boss' : ''}">
           <span class="creature-name">
             ${c.name}
             ${c.boss ? '<span class="boss-tag">BOSS</span>' : ''}
@@ -532,9 +560,15 @@
       `;
     }
 
+    function setTheme(themeName) {
+      document.body.className = themeName ? `theme-${themeName}` : 'theme-default';
+    }
+
     function openBiome(key) {
       const biome = data[key];
       if (!biome) return;
+
+      setTheme(key);
 
       document.getElementById('biomes-view').style.display = 'none';
       document.getElementById('back-btn').style.display = 'flex';
@@ -550,6 +584,8 @@
     }
 
     function showBiomes() {
+      setTheme('default');
+
       document.getElementById('creatures-view').style.display = 'none';
       document.getElementById('back-btn').style.display = 'none';
       document.getElementById('biomes-view').style.display = 'grid';
@@ -563,6 +599,8 @@
         showBiomes();
         return;
       }
+
+      setTheme('default');
 
       document.getElementById('biomes-view').style.display = 'none';
       document.getElementById('back-btn').style.display = 'flex';
