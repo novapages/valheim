@@ -15,16 +15,16 @@
       touch-action: manipulation;
     }
 
-    html {
-      background-color: #1e293b;
-    }
-
-    body {
+    html, body {
       background-color: #1e293b;
       color: #f8fafc;
       min-height: 100vh;
       min-height: 100dvh;
-      padding: 16px;
+      margin: 0;
+    }
+
+    body {
+      padding: 24px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -64,6 +64,9 @@
     .app-container {
       width: 100%;
       max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .glass {
@@ -76,17 +79,17 @@
 
     .search-container {
       width: 100%;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
 
     .search-input {
       width: 100%;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       background: rgba(15, 23, 42, 0.6);
       color: #fff;
-      font-size: 1rem;
+      font-size: 1.2rem;
       outline: none;
     }
 
@@ -99,12 +102,13 @@
       align-items: center;
       gap: 8px;
       background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      padding: 8px 14px;
+      padding: 10px 16px;
+	  font-size: 1.2rem;
       border-radius: 12px;
       font-weight: 600;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       cursor: pointer;
       outline: none;
       user-select: none;
@@ -114,11 +118,11 @@
     .biome-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 16px;
       width: 100%;
     }
 
-    .biome-card {
+     .biome-card {
       aspect-ratio: 2 / 1;
       padding: 12px;
       text-align: center;
@@ -134,60 +138,51 @@
     }
 
     .biome-prairie {
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.35) 0%, rgba(22, 101, 52, 0.45) 100%);
-      border: 1px solid #4ade80;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.45) 0%, rgba(22, 101, 52, 0.65) 100%);
     }
 
     .biome-foret {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(6, 78, 59, 0.45) 100%);
-      border: 1px solid #34d399;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.45) 0%, rgba(6, 78, 59, 0.65) 100%);
     }
 
     .biome-marais {
-      background: linear-gradient(135deg, rgba(163, 230, 53, 0.35) 0%, rgba(63, 98, 18, 0.45) 100%);
-      border: 1px solid #a3e635;
+      background: linear-gradient(135deg, rgba(163, 230, 53, 0.45) 0%, rgba(63, 98, 18, 0.65) 100%);
     }
 
     .biome-montagne {
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(12, 74, 110, 0.45) 100%);
-      border: 1px solid #38bdf8;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.45) 0%, rgba(12, 74, 110, 0.65) 100%);
     }
 
     .biome-plaines {
-      background: linear-gradient(135deg, rgba(250, 204, 21, 0.35) 0%, rgba(113, 63, 18, 0.45) 100%);
-      border: 1px solid #facc15;
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.45) 0%, rgba(113, 63, 18, 0.65) 100%);
     }
 
     .biome-brume {
-      background: linear-gradient(135deg, rgba(192, 132, 252, 0.35) 0%, rgba(88, 28, 135, 0.45) 100%);
-      border: 1px solid #c084fc;
+      background: linear-gradient(135deg, rgba(192, 132, 252, 0.45) 0%, rgba(88, 28, 135, 0.65) 100%);
     }
 
     .biome-cendre {
-      background: linear-gradient(135deg, rgba(248, 113, 113, 0.35) 0%, rgba(153, 27, 27, 0.45) 100%);
-      border: 1px solid #f87171;
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.45) 0%, rgba(153, 27, 27, 0.65) 100%);
     }
 
     .biome-nord {
-      background: linear-gradient(135deg, rgba(129, 140, 248, 0.35) 0%, rgba(49, 46, 129, 0.45) 100%);
-      border: 1px solid #818cf8;
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.45) 0%, rgba(49, 46, 129, 0.65) 100%);
     }
 
     .biome-ocean {
-      background: linear-gradient(135deg, rgba(96, 165, 250, 0.35) 0%, rgba(30, 58, 138, 0.45) 100%);
-      border: 1px solid #60a5fa;
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.45) 0%, rgba(30, 58, 138, 0.65) 100%);
     }
 
     .biome-icon {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       line-height: 1;
     }
 
     .biome-title {
       font-weight: 800;
       font-size: 1.5rem;
-      letter-spacing: 0.5px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      letter-spacing: 0.8px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
     }
 
     .creatures-view {
@@ -195,9 +190,9 @@
     }
 
     .biome-header-title {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 800;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       color: #f8fafc;
       text-shadow: 0 2px 4px rgba(0,0,0,0.4);
     }
@@ -205,49 +200,49 @@
     .creature-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .creature-card {
-      padding: 12px 16px;
+      padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
       background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
     }
 
-    .theme-prairie .creature-card { border-color: rgba(74, 222, 128, 0.3); background: rgba(34, 197, 94, 0.12); }
-    .theme-foret .creature-card   { border-color: rgba(52, 211, 153, 0.3); background: rgba(16, 185, 129, 0.12); }
-    .theme-marais .creature-card  { border-color: rgba(163, 230, 53, 0.3); background: rgba(163, 230, 53, 0.12); }
-    .theme-montagne .creature-card{ border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.12); }
-    .theme-plaines .creature-card { border-color: rgba(250, 204, 21, 0.3); background: rgba(250, 204, 21, 0.12); }
-    .theme-brume .creature-card   { border-color: rgba(192, 132, 252, 0.3); background: rgba(192, 132, 252, 0.12); }
-    .theme-cendre .creature-card  { border-color: rgba(248, 113, 113, 0.3); background: rgba(248, 113, 113, 0.12); }
-    .theme-nord .creature-card    { border-color: rgba(129, 140, 248, 0.3); background: rgba(129, 140, 248, 0.12); }
-    .theme-ocean .creature-card   { border-color: rgba(96, 165, 250, 0.3); background: rgba(96, 165, 250, 0.12); }
+    .theme-prairie .creature-card { background: rgba(34, 197, 94, 0.12); }
+    .theme-foret .creature-card   { background: rgba(16, 185, 129, 0.12); }
+    .theme-marais .creature-card  { background: rgba(163, 230, 53, 0.12); }
+    .theme-montagne .creature-card{ background: rgba(56, 189, 248, 0.12); }
+    .theme-plaines .creature-card { background: rgba(250, 204, 21, 0.12); }
+    .theme-brume .creature-card   { background: rgba(192, 132, 252, 0.12); }
+    .theme-cendre .creature-card  { background: rgba(248, 113, 113, 0.12); }
+    .theme-nord .creature-card    { background: rgba(129, 140, 248, 0.12); }
+    .theme-ocean .creature-card   { background: rgba(96, 165, 250, 0.12); }
 
     .creature-card.boss {
-      border: 1px solid rgba(251, 191, 36, 0.8) !important;
+      border: 1px solid rgba(251, 191, 36, 0.7) !important;
       background: rgba(251, 191, 36, 0.18) !important;
-      box-shadow: 0 0 14px rgba(251, 191, 36, 0.25);
+      box-shadow: 0 0 16px rgba(251, 191, 36, 0.2);
     }
 
     .creature-name {
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     .boss-tag {
-      font-size: 0.7rem;
+      font-size: 0.9rem;
       background: #fbbf24;
       color: #000;
-      padding: 1px 6px;
+      padding: 2px 6px;
       border-radius: 4px;
       font-weight: 800;
     }
@@ -260,69 +255,69 @@
       justify-content: flex-end;
     }
 
-    .badge {
+   .badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
-      min-height: 32px;
-      border-radius: 8px;
-      font-size: 1.1rem;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      border-radius: 10px;
+      font-size: 1.4rem;
       line-height: 1;
+      flex-shrink: 0;
     }
 
     .badge-weak {
       background: rgba(34, 197, 94, 0.35);
-      border: 1px solid #4ade80;
+      border: 1px solid rgba(74, 222, 128, 0.4);
     }
 
     .badge-res {
       background: rgba(249, 115, 22, 0.35);
-      border: 1px solid #fb923c;
+      border: 1px solid rgba(251, 146, 60, 0.4);
     }
 
     .badge-imm {
       background: rgba(56, 189, 248, 0.35);
-      border: 1px solid #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.4);
     }
 
     .no-results {
       text-align: center;
-      padding: 24px;
+      padding: 32px;
       color: #cbd5e1;
+      font-size: 1.2rem;
     }
 
     @media (max-width: 600px) {
       body {
-        padding: 10px;
-        align-items: flex-start;
+        padding: 14px;
       }
 
       .biome-grid {
-        gap: 8px;
+        gap: 12px;
       }
 
       .biome-card {
-        aspect-ratio: 2.3 / 1;
-        padding: 6px;
-        gap: 4px;
-        border-radius: 12px;
+        aspect-ratio: 4 / 2.2;
+        padding: 16px 10px;
+        gap: 8px;
+        border-radius: 16px;
       }
 
       .biome-icon {
-        font-size: 1.5rem;
+        font-size: 2rem;
       }
 
       .biome-title {
-        font-size: 0.72rem;
-        letter-spacing: 0;
+        font-size: 0.85rem;
+        letter-spacing: 0.4px;
       }
 
       .search-input {
-        padding: 10px 12px;
-        font-size: 0.9rem;
+        padding: 12px 14px;
+        font-size: 0.95rem;
       }
     }
   </style>
@@ -361,11 +356,11 @@
       </div>
       <div class="biome-card biome-brume" onclick="openBiome('brume')">
         <span class="biome-icon">😶‍🌫️</span>
-        <span class="biome-title">TERRES BRUMEUSES</span>
+        <span class="biome-title">TERRES DE BRUME</span>
       </div>
       <div class="biome-card biome-cendre" onclick="openBiome('cendre')">
         <span class="biome-icon">🥵</span>
-        <span class="biome-title">TERRES DE CENDRES</span>
+        <span class="biome-title">TERRES DE CENDRE</span>
       </div>
       <div class="biome-card biome-nord" onclick="openBiome('nord')">
         <span class="biome-icon">🥶</span>
@@ -411,7 +406,7 @@
         ]
       },
       marais: {
-        title: "🐸 Marais",
+        title: "🤢 Marais",
         creatures: [
           { name: "Abomination", weak: "🔥", res: "🏹🔨", imm: "❄️🧪✨" },
           { name: "Blob", weak: "🔨❄️⚡", res: "🗡️🏹🔥", imm: "🧪" },
@@ -425,7 +420,7 @@
         ]
       },
       montagne: {
-        title: "❄️ Montagne",
+        title: "️🏔️ Montagne",
         creatures: [
           { name: "Chauve-souris", weak: "🔥✨", res: "🔨🗡️🏹", imm: "❄️🧪" },
           { name: "Cultiste", weak: "🧪", res: "", imm: "🔥" },
@@ -456,7 +451,7 @@
         ]
       },
       brume: {
-        title: "🌫️ Terres brumeuses",
+        title: "😶‍🌫️ Terres brumeuses",
         creatures: [
           { name: "Mage dvergr", weak: "", res: "🔥❄️", imm: "✨" },
           { name: "Dvergr", weak: "", res: "", imm: "✨" },
@@ -471,7 +466,7 @@
         ]
       },
       cendre: {
-        title: "🔥 Terres de cendres",
+        title: "🥵 Terres de cendres",
         creatures: [
           { name: "Asksvin", weak: "", res: "🔥🧪", imm: "✨" },
           { name: "Bébé Asksvin", weak: "", res: "🔥🧪", imm: "✨" },
@@ -492,7 +487,7 @@
         ]
       },
       nord: {
-        title: "🧊 Grand Nord",
+        title: "🥶 Grand Nord",
         creatures: [
           { name: "Aspect de la Matriarche Rampante", weak: "", res: "🏹", imm: "✨" },
           { name: "Aspect de la Mère Dragon", weak: "🔥", res: "", imm: "❄️✨" },
@@ -519,7 +514,7 @@
         ]
       },
       ocean: {
-        title: "🌊 Océan",
+        title: "⛵ Océan",
         creatures: [
           { name: "Serpent", weak: "❄️", res: "🧪", imm: "🔥✨" }
         ]
@@ -615,6 +610,7 @@
       Object.values(data).forEach(biome => {
         biome.creatures.forEach(c => {
           if (c.name.toLowerCase().includes(query) || biome.title.toLowerCase().includes(query)) {
+            matches.path = true; // dummy
             matches.push(c);
           }
         });
