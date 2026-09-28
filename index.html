@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valheim Bestiaire</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #1e293b; /* Fond gris-bleu foncé plus clair */
+      color: #f8fafc;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 800px;
+      margin: auto 0;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+    }
+
+    .search-container {
+      margin-bottom: 16px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(15, 23, 42, 0.6);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: #fbbf24;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.3);
+    }
+
+    .search-input::placeholder {
+      color: #cbd5e1;
+    }
+
+    /* Bouton retour */
+    .back-btn {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Biome Grid : 2 colonnes */
+    .biome-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .biome-card {
+      aspect-ratio: 2 / 1;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 16px;
+    }
+
+    .biome-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .biome-card:active {
+      transform: scale(0.97);
+    }
+
+    /* Couleurs vivantes & contrastées par Biome */
+    .biome-prairie {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.35) 0%, rgba(22, 101, 52, 0.45) 100%);
+      border: 1px solid #4ade80;
+    }
+    .biome-prairie:hover {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.5) 0%, rgba(22, 101, 52, 0.6) 100%);
+      box-shadow: 0 4px 20px rgba(74, 222, 128, 0.25);
+    }
+
+    .biome-foret {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.35) 0%, rgba(6, 78, 59, 0.45) 100%);
+      border: 1px solid #34d399;
+    }
+    .biome-foret:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.5) 0%, rgba(6, 78, 59, 0.6) 100%);
+      box-shadow: 0 4px 20px rgba(52, 211, 153, 0.25);
+    }
+
+    .biome-marais {
+      background: linear-gradient(135deg, rgba(163, 230, 53, 0.35) 0%, rgba(63, 98, 18, 0.45) 100%);
+      border: 1px solid #a3e635;
+    }
+    .biome-marais:hover {
+      background: linear-gradient(135deg, rgba(163, 230, 53, 0.5) 0%, rgba(63, 98, 18, 0.6) 100%);
+      box-shadow: 0 4px 20px rgba(163, 230, 53, 0.25);
+    }
+
+    .biome-montagne {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.35) 0%, rgba(12, 74, 110, 0.45) 100%);
+      border: 1px solid #38bdf8;
+    }
+    .biome-montagne:hover {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.5) 0%, rgba(12, 74, 110, 0.6) 100%);
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
+    }
+
+    .biome-plaines {
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.35) 0%, rgba(113, 63, 18, 0.45) 100%);
+      border: 1px solid #facc15;
+    }
+    .biome-plaines:hover {
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.5) 0%, rgba(113, 63, 18, 0.6) 100%);
+      box-shadow: 0 4px 20px rgba(250, 204, 21, 0.25);
+    }
+
+    .biome-brume {
+      background: linear-gradient(135deg, rgba(192, 132, 252, 0.35) 0%, rgba(88, 28, 135, 0.45) 100%);
+      border: 1px solid #c084fc;
+    }
+    .biome-brume:hover {
+      background: linear-gradient(135deg, rgba(192, 132, 252, 0.5) 0%, rgba(88, 28, 135, 0.6) 100%);
+      box-shadow: 0 4px 20px rgba(192, 132, 252, 0.25);
+    }
+
+    .biome-cendre {
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.35) 0%, rgba(153, 27, 27, 0.45) 100%);
+      border: 1px solid #f87171;
+    }
+    .biome-cendre:hover {
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.5) 0%, rgba(153, 27, 27, 0.6) 100%);
+      box-shadow: 0 4px 20px rgba(248, 113, 113, 0.25);
+    }
+
+    .biome-nord {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.35) 0%, rgba(49, 46, 129, 0.45) 100%);
+      border: 1px solid #818cf8;
+    }
+    .biome-nord:hover {
+      background: linear-gradient(135deg, rgba(129, 140, 248, 0.5) 0%, rgba(49, 46, 129, 0.6) 100%);
+      box-shadow: 0 4px 20px rgba(129, 140, 248, 0.25);
+    }
+
+    .biome-ocean {
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.35) 0%, rgba(30, 58, 138, 0.45) 100%);
+      border: 1px solid #60a5fa;
+    }
+    .biome-ocean:hover {
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.5) 0%, rgba(30, 58, 138, 0.6) 100%);
+      box-shadow: 0 4px 20px rgba(96, 165, 250, 0.25);
+    }
+
+    .biome-icon {
+      font-size: 2.2rem;
+    }
+
+    .biome-title {
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: 0.8px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    /* Creatures View */
+    .creatures-view {
+      display: none;
+    }
+
+    .biome-header-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #f8fafc;
+    }
+
+    .creature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .creature-card {
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .creature-card.boss {
+      border: 1px solid rgba(251, 191, 36, 0.7);
+      background: rgba(251, 191, 36, 0.15);
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.2);
+    }
+
+    .creature-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .boss-tag {
+      font-size: 0.7rem;
+      background: #fbbf24;
+      color: #000;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 800;
+    }
+
+    .badges-container {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      min-height: 32px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .badge-weak {
+      background: rgba(34, 197, 94, 0.35);
+      border: 1px solid #4ade80;
+    }
+
+    .badge-res {
+      background: rgba(249, 115, 22, 0.35);
+      border: 1px solid #fb923c;
+    }
+
+    .badge-imm {
+      background: rgba(56, 189, 248, 0.35);
+      border: 1px solid #38bdf8;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 24px;
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Barre de recherche -->
+    <div class="search-container">
+      <input type="text" id="search-input" class="search-input" placeholder="Rechercher un monstre ou un biome..." oninput="handleSearch()">
+    </div>
+
+    <button id="back-btn" class="back-btn glass" onclick="showBiomes()">
+      ← Biomes
+    </button>
+
+    <!-- Biomes Grid -->
+    <main id="biomes-view" class="biome-grid">
+      <div class="biome-card biome-prairie" onclick="openBiome('prairie')">
+        <span class="biome-icon">🌱</span>
+        <span class="biome-title">PRAIRIE</span>
+      </div>
+      <div class="biome-card biome-foret" onclick="openBiome('foret')">
+        <span class="biome-icon">🌲</span>
+        <span class="biome-title">FORÊT NOIRE</span>
+      </div>
+      <div class="biome-card biome-marais" onclick="openBiome('marais')">
+        <span class="biome-icon">🤢</span>
+        <span class="biome-title">MARAIS</span>
+      </div>
+      <div class="biome-card biome-montagne" onclick="openBiome('montagne')">
+        <span class="biome-icon">🏔️</span>
+        <span class="biome-title">MONTAGNE</span>
+      </div>
+      <div class="biome-card biome-plaines" onclick="openBiome('plaines')">
+        <span class="biome-icon">🌾</span>
+        <span class="biome-title">PLAINES</span>
+      </div>
+      <div class="biome-card biome-brume" onclick="openBiome('brume')">
+        <span class="biome-icon">😶‍🌫️</span>
+        <span class="biome-title">TERRES DE BRUME</span>
+      </div>
+      <div class="biome-card biome-cendre" onclick="openBiome('cendre')">
+        <span class="biome-icon">🥵</span>
+        <span class="biome-title">TERRES DE CENDRE</span>
+      </div>
+      <div class="biome-card biome-nord" onclick="openBiome('nord')">
+        <span class="biome-icon">🥶</span>
+        <span class="biome-title">GRAND NORD</span>
+      </div>
+      <div class="biome-card biome-ocean" onclick="openBiome('ocean')">
+        <span class="biome-icon">⛵</span>
+        <span class="biome-title">OCÉAN</span>
+      </div>
+    </main>
+
+    <section id="creatures-view" class="creatures-view">
+      <div id="biome-header" class="biome-header-title"></div>
+      <div id="creature-list" class="creature-list"></div>
+    </section>
+  </div>
+
+  <script>
+    const data = {
+      prairie: {
+        title: "🌱 Prairie",
+        creatures: [
+          { name: "Sanglier", weak: "", res: "", imm: "✨" },
+          { name: "Cerf", weak: "", res: "", imm: "✨" },
+          { name: "Nixe", weak: "🔥", res: "🧪", imm: "✨" },
+          { name: "Bourgeon naingris", weak: "🔥", res: "🧪", imm: "✨" },
+          { name: "Eikthyr", weak: "", res: "", imm: "", boss: true }
+        ]
+      },
+      foret: {
+        title: "🌲 Forêt Noire",
+        creatures: [
+          { name: "Ours", weak: "🔥", res: "🔨🏹❄️", imm: "✨" },
+          { name: "Brenna", weak: "🔨❄️", res: "🏹", imm: "🔥🧪" },
+          { name: "Cadavre rance", weak: "🔨🔥", res: "🏹❄️", imm: "🧪" },
+          { name: "Troll", weak: "🏹", res: "🔨", imm: "✨" },
+          { name: "Fantôme", weak: "✨", res: "🔨🗡️🏹", imm: "🧪" },
+          { name: "Naingris", weak: "🔥", res: "🧪", imm: "✨" },
+          { name: "Brute naingris", weak: "🔥", res: "🧪", imm: "✨" },
+          { name: "Chamane naingris", weak: "🔥", res: "🧪", imm: "✨" },
+          { name: "Racines", weak: "", res: "", imm: "🔨🔥❄️⚡🏹🧪🗡️✨" },
+          { name: "L'Aîné", weak: "🔥", res: "", imm: "🧪✨", boss: true }
+        ]
+      },
+      marais: {
+        title: "🐸 Marais",
+        creatures: [
+          { name: "Abomination", weak: "🔥", res: "🏹🔨", imm: "❄️🧪✨" },
+          { name: "Blob", weak: "🔨❄️⚡", res: "🗡️🏹🔥", imm: "🧪" },
+          { name: "Draugr", weak: "", res: "🔥", imm: "🧪" },
+          { name: "Draugr élite", weak: "", res: "🔥", imm: "🧪" },
+          { name: "Sangsue", weak: "", res: "🧪", imm: "🔥✨" },
+          { name: "Oozer", weak: "🔨❄️⚡", res: "🗡️🏹🔥", imm: "🧪" },
+          { name: "Spectre", weak: "🔥✨", res: "🔨🗡️🏹", imm: "❄️🧪" },
+          { name: "Writhan", weak: "🗡️", res: "🔨🔥", imm: "🧪" },
+          { name: "Masse d'Os", weak: "🔨❄️", res: "🏹🔥🗡️", imm: "🧪", boss: true }
+        ]
+      },
+      montagne: {
+        title: "❄️ Montagne",
+        creatures: [
+          { name: "Chauve-souris", weak: "🔥✨", res: "🔨🗡️🏹", imm: "❄️🧪" },
+          { name: "Cultiste", weak: "🧪", res: "", imm: "🔥" },
+          { name: "Drake", weak: "🔥", res: "", imm: "❄️✨" },
+          { name: "Fenring", weak: "🔥", res: "🧪", imm: "" },
+          { name: "Blob de Gel", weak: "🔨🔥⚡", res: "❄️🗡️🏹", imm: "🧪" },
+          { name: "Geirrhafa", weak: "🔥", res: "", imm: "❄️" },
+          { name: "Golem de Pierre", weak: "", res: "🗡️🏹", imm: "🔥❄️🧪✨" },
+          { name: "Ulv", weak: "🧪", res: "🔥", imm: "" },
+          { name: "Loup", weak: "", res: "", imm: "✨" },
+          { name: "Modor", weak: "🔥", res: "", imm: "❄️✨", boss: true }
+        ]
+      },
+      plaines: {
+        title: "🌾 Plaines",
+        creatures: [
+          { name: "Morstique", weak: "", res: "", imm: "✨" },
+          { name: "Gobelin", weak: "", res: "", imm: "✨" },
+          { name: "Berserker gobelin", weak: "", res: "", imm: "✨" },
+          { name: "Chamane gobelin", weak: "", res: "", imm: "✨" },
+          { name: "Croissance", weak: "🔨🔥", res: "🗡️🏹❄️", imm: "🧪" },
+          { name: "Lox", weak: "🔥", res: "🔨🗡️❄️", imm: "✨" },
+          { name: "Thungr", weak: "", res: "", imm: "✨" },
+          { name: "Vile", weak: "🔥✨", res: "🔨🗡️🏹❄️", imm: "🧪" },
+          { name: "Zil", weak: "", res: "", imm: "✨" },
+          { name: "Zil & Thungr", weak: "", res: "", imm: "✨" },
+          { name: "Yagluth", weak: "", res: "🏹🔥", imm: "🧪", boss: true }
+        ]
+      },
+      brume: {
+        title: "🌫️ Terres brumeuses",
+        creatures: [
+          { name: "Mage dvergr", weak: "", res: "🔥❄️", imm: "✨" },
+          { name: "Dvergr", weak: "", res: "", imm: "✨" },
+          { name: "Gjall", weak: "", res: "🔥", imm: "✨" },
+          { name: "Lièvre", weak: "", res: "", imm: "✨" },
+          { name: "Kvastur", weak: "🔥", res: "", imm: "🧪✨" },
+          { name: "Mistile", weak: "", res: "", imm: "✨" },
+          { name: "Fouineur", weak: "", res: "🔨🗡️🏹", imm: "✨" },
+          { name: "Soldat Fouineur", weak: "", res: "🔨🗡️🏹", imm: "✨" },
+          { name: "Tique", weak: "🏹", res: "", imm: "✨" },
+          { name: "La Reine", weak: "", res: "🏹", imm: "✨", boss: true }
+        ]
+      },
+      cendre: {
+        title: "🔥 Terres de cendres",
+        creatures: [
+          { name: "Asksvin", weak: "", res: "🔥🧪", imm: "✨" },
+          { name: "Bébé Asksvin", weak: "", res: "🔥🧪", imm: "✨" },
+          { name: "Serpent de Lave (Bonemaw)", weak: "❄️", res: "🧪", imm: "🔥✨" },
+          { name: "Tireur d'Élite Calciné", weak: "✨", res: "🔥🏹", imm: "🧪" },
+          { name: "Twitcher Calciné", weak: "✨", res: "🔥🏹", imm: "🧪" },
+          { name: "Sorcier Calciné", weak: "✨", res: "🔥🏹❄️", imm: "🧪" },
+          { name: "Guerrier Calciné", weak: "✨", res: "🔥🏹", imm: "🧪" },
+          { name: "Valkyrie Déchue", weak: "✨", res: "🔥", imm: "🧪" },
+          { name: "Blob de Lave", weak: "🔨❄️⚡", res: "🏹🧪", imm: "🔥" },
+          { name: "Lord Reto", weak: "✨", res: "🏹🔥❄️", imm: "🧪" },
+          { name: "Morgen", weak: "⚡", res: "🔨🗡️🏹🔥", imm: "" },
+          { name: "Guerrier Calciné Invoqué", weak: "✨", res: "🏹", imm: "🔥🧪" },
+          { name: "Twitcher Invoqué", weak: "✨", res: "🔥🏹", imm: "🧪" },
+          { name: "Surtling", weak: "❄️", res: "", imm: "🔥🧪✨" },
+          { name: "Vautour d'Os (Volture)", weak: "❄️", res: "", imm: "🧪" },
+          { name: "Fader", weak: "", res: "🏹", imm: "🔥✨", boss: true }
+        ]
+      },
+      nord: {
+        title: "🧊 Grand Nord",
+        creatures: [
+          { name: "Aspect de la Matriarche Rampante", weak: "", res: "🏹", imm: "✨" },
+          { name: "Aspect de la Mère Dragon", weak: "🔥", res: "", imm: "❄️✨" },
+          { name: "Aspect de la Flamme d'Émeraude", weak: "", res: "🏹", imm: "🔥✨" },
+          { name: "Aspect du Cerf de Foudre", weak: "", res: "", imm: "" },
+          { name: "Aspect de la Forêt Vivante", weak: "🔥", res: "", imm: "🧪✨" },
+          { name: "Aspect de l'Âme Tordue", weak: "", res: "🏹🔥", imm: "🧪" },
+          { name: "Aspect des Morts Agités", weak: "🔨❄️", res: "🏹🔥🗡️", imm: "🧪" },
+          { name: "Bébé Phoque", weak: "", res: "", imm: "✨" },
+          { name: "Barka", weak: "🔥", res: "🔨🗡️🏹❄️⚡", imm: "🧪✨" },
+          { name: "Fuling Captif", weak: "", res: "", imm: "✨" },
+          { name: "Elaking", weak: "🔥", res: "❄️", imm: "✨" },
+          { name: "Feu Follet de Gel", weak: "🔥✨", res: "🔨🗡️🏹", imm: "❄️🧪" },
+          { name: "Frysling", weak: "❄️", res: "", imm: "🔥🧪✨" },
+          { name: "Gammeltroll", weak: "", res: "🔨🗡️🏹❄️", imm: "🔥✨" },
+          { name: "Hexen", weak: "🔥", res: "❄️", imm: "🧪✨" },
+          { name: "Dvergr Emprisonné", weak: "", res: "", imm: "✨" },
+          { name: "Kall Porteur de Fimbul", weak: "", res: "🏹🔥❄️⚡", imm: "✨" },
+          { name: "Krigen", weak: "", res: "❄️🏹", imm: "🧪✨" },
+          { name: "Moose", weak: "🔥", res: "🔨🗡❄️", imm: "✨" },
+          { name: "Seal", weak: "🔥", res: "", imm: "✨" },
+          { name: "Shadow", weak: "", res: "", imm: "✨🔨🗡❄️🧪🏹⚡🔥" },
+          { name: "Tendril", weak: "🔥", res: "❄️", imm: "🧪" }
+        ]
+      },
+      ocean: {
+        title: "🌊 Océan",
+        creatures: [
+          { name: "Serpent", weak: "❄️", res: "🧪", imm: "🔥✨" }
+        ]
+      }
+    };
+
+    function splitEmojis(str) {
+      if (!str) return [];
+      if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+        const segmenter = new Intl.Segmenter('fr', { granularity: 'grapheme' });
+        return Array.from(segmenter.segment(str))
+          .map(s => s.segment.replace(/\uFE0F/g, '').trim())
+          .filter(Boolean);
+      }
+      return Array.from(str)
+        .map(char => char.replace(/\uFE0F/g, '').trim())
+        .filter(Boolean);
+    }
+
+    function renderBadges(str, typeClass) {
+      const emojis = splitEmojis(str);
+      return emojis.map(e => `<span class="badge ${typeClass}">${e}</span>`).join('');
+    }
+
+    function renderCreatureCard(c) {
+      return `
+        <div class="creature-card glass ${c.boss ? 'boss' : ''}">
+          <span class="creature-name">
+            ${c.name}
+            ${c.boss ? '<span class="boss-tag">BOSS</span>' : ''}
+          </span>
+          <div class="badges-container">
+            ${renderBadges(c.weak, 'badge-weak')}
+            ${renderBadges(c.res, 'badge-res')}
+            ${renderBadges(c.imm, 'badge-imm')}
+          </div>
+        </div>
+      `;
+    }
+
+    function openBiome(key) {
+      const biome = data[key];
+      if (!biome) return;
+
+      document.getElementById('biomes-view').style.display = 'none';
+      document.getElementById('back-btn').style.display = 'flex';
+      
+      const creaturesView = document.getElementById('creatures-view');
+      const header = document.getElementById('biome-header');
+      const list = document.getElementById('creature-list');
+
+      header.innerHTML = biome.title;
+      list.innerHTML = biome.creatures.map(renderCreatureCard).join('');
+
+      creaturesView.style.display = 'block';
+    }
+
+    function showBiomes() {
+      document.getElementById('creatures-view').style.display = 'none';
+      document.getElementById('back-btn').style.display = 'none';
+      document.getElementById('biomes-view').style.display = 'grid';
+      document.getElementById('search-input').value = '';
+    }
+
+    function handleSearch() {
+      const query = document.getElementById('search-input').value.toLowerCase().trim();
+      
+      if (!query) {
+        showBiomes();
+        return;
+      }
+
+      document.getElementById('biomes-view').style.display = 'none';
+      document.getElementById('back-btn').style.display = 'flex';
+      
+      const creaturesView = document.getElementById('creatures-view');
+      const header = document.getElementById('biome-header');
+      const list = document.getElementById('creature-list');
+
+      header.innerHTML = `🔍 Résultats pour "${query}"`;
+
+      let matches = [];
+      Object.values(data).forEach(biome => {
+        biome.creatures.forEach(c => {
+          if (c.name.toLowerCase().includes(query) || biome.title.toLowerCase().includes(query)) {
+            matches.push(c);
+          }
+        });
+      });
+
+      if (matches.length > 0) {
+        list.innerHTML = matches.map(renderCreatureCard).join('');
+      } else {
+        list.innerHTML = `<div class="no-results">Aucun monstre trouvé.</div>`;
+      }
+
+      creaturesView.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
